@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="static/styles/style.css">
+    <title>{{ title }}</title>
+    <!-- Load Vega & Vega-Lite -->
+    <script src="https://cdn.jsdelivr.net/npm/vega@{{ vega_version }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@{{ vegalite_version }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@{{ vegaembed_version }}"></script>
+</head>
+<body>
+    <form action="/" method="get">
+        <select name="selected_country">
+            {% for country in countries %}
+            <option value="{{ country }}" {% if country == selected_country %} selected {% endif %}>{{ country }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="Show Demographics">
+    </form>
+
+    <div id="vis"></div>
+    <script type="text/javascript">
+        var spec = {{ chart_json | safe }};
+        vegaEmbed('#vis', spec);
+    </script>
+</body>
+</html>

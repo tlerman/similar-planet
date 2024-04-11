@@ -6,18 +6,50 @@
 
 body {
     padding: 2rem;
-    background-color: #333;
-    color: whitesmoke;
+    background-color: white; /* Updated to a clean white background */
+    color: #333; /* Dark gray color for better readability on white */
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 2rem;
-    font-size: 2rem;
+    font-size: 1rem; /* Adjusted for general readability */
 }
 
 input, button {
-    font-size: 2rem;
-    padding: 1rem;
-    border-radius: 10px;
+    font-size: 1rem;
+    padding: 0.5rem 1rem; /* Slightly reduced padding for a neater appearance */
+    border-radius: 5px; /* Smoother border radius */
+    border: 1px solid #ccc; /* Light border for subtle definition */
+    background-color: #f9f9f9; /* Light background */
+    color: #333; /* Dark text for contrast */
+    cursor: pointer; /* Cursor changes to pointer to indicate clickable */
+}
+
+input:hover, button:hover {
+    background-color: #eaeaea; /* Slightly darker on hover for interactive feedback */
+}
+
+#vis {
+    width: 100%;
+    max-width: 960px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem; /* Space between elements within the container */
+}
+
+/* Custom styles for the visualization */
+.bar {
+    transition: fill 0.2s ease; /* Smooth transition for bar color change */
+}
+
+.bar:hover {
+    fill: #007bff; /* Bright blue on hover for a noticeable interactive feedback */
+}
+
+.value {
+    fill: #333; /* Dark text for the percentage values for readability */
+    font-family: 'Arial', sans-serif; /* Ensure the font is consistent and readable */
+    font-size: 0.75rem; /* Smaller font size for the values to fit well on bars */
 }

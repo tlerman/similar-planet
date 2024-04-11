@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Demographic Pyramid with D3.js</title>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <style>
+        .bar {
+            fill: steelblue;
+        }
+        .bar:hover {
+            fill: darkorange;
+        }
+        .chart {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <h2>Demographic Pyramid Visualization</h2>
+    <div id="chart" class="chart"></div>
+
+    <script>
+        // Fetch the demographic data from the Flask app
+        d3.json('/data?selected_country=France').then(function(data) {
+            console.log(data); // Check the structure of the fetched data
+
+            const margin = {top: 20, right: 20, bottom: 30, left: 40},
+                width = 960 - margin.left - margin.right,
+                height = 500 - margin.top - margin.bottom;
+
+            // Set up the SVG container
+            const svg = d3.select("#chart").append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+            // Create scales
+            const xScale = d3.scaleLinear().range([0, width / 2]);
+            const yScale = d3.scaleBand().range([height, 0]).padding(0.1);
+
+            // Set the domains of the scales
+            xScale.domain([0, d3.max([...data.male_population, ...data.female_population])]);
+            yScale.domain(data.age_groups);
+
+            // Add the male population bars
+            svg.selectAll(".bar.male")
+                .data(data.male_population)
+                .enter().append("rect")
+                .attr("class", "bar male")
+                .attr("x", width / 2) // Starting point is the middle of the SVG
+                .attr("y", (d, i) => yScale(data.age_groups[i]))
+                .attr("width", d => xScale(d))
+                .attr("height", yScale.bandwidth())
+                .attr("fill", "blue"); // Specifying color for male
+
+            // Add the female population bars
+            svg.selectAll(".bar.female")
+                .data(data.female_population)
+                .enter().append("rect")
+                .attr("class", "bar female")
+                .attr("x", d => width / 2 - xScale(d)) // Bars extend to the left from the middle
+                .attr("y", (d, i) => yScale(data.age_groups[i]))
+                .attr("width", d => xScale(d))
+                .attr("height", yScale.bandwidth())
+                .attr("fill", "blue"); // Specifying color for female to be blue as well
+
+            // Add y-axis
+            svg.append("g")
+                .call(d3.axisLeft(yScale));
+        });
+    </script>
+</body>
+</html>

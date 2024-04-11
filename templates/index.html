@@ -1,18 +1,36 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <title>Tals Web in index.html</title>
-    <link href="{{url_for('static', filename='styles\style.css')}}"
-         rel="stylesheet"/>
+    <meta charset="utf-8">
+    <title>Demographic Pyramid with D3.js</title>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <link rel="stylesheet" href="/static/styles/style.css">
+    <div id="tooltip" style="position: absolute; opacity: 0; background-color: #fff; border: 1px solid #ddd; padding: 5px; border-radius: 3px; pointer-events: none;"></div>
+    <style>
+        .bar:hover {
+            fill: darkorange;
+        }
+        .chart {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+
 </head>
 <body>
-    <h1>Get weather conditions</h1>
-<form action='/weather'>
-    <input type="text" name="city" id="city" placeholder="Enter a City"/>
-    <button type="submit">Submit</button>
+    <h2>Demographic Pyramid Visualization</h2>
+<label for="country-select">Choose a country:</label>
+<select id="country-select" name="country-select">
+    <option value="">Select a country</option>
+    {% for country in countries %}
+    <option value="{{ country }}">{{ country }}</option>
+    {% endfor %}
+</select>
 
-</form>
+    <div id="chart" class="chart"></div>
+    <script src="static/tal_d3.js"></script>
 </body>
 </html>
+
+

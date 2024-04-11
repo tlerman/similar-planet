@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <link href="https://cdn.bokeh.org/bokeh/release/bokeh-3.3.4.min.css" rel="stylesheet" type="text/css">
+    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-3.3.4.min.js"></script>
+
+    <!-- Include any other Bokeh widgets or tables if needed -->
+</head>
+<body>
+    <div id="myplot"></div>
+    <script>
+        var chart_json = {{ chart_json|safe }};
+        Bokeh.embed.embed_item(chart_json, "myplot");
+    </script>
+</body>
+</html>
