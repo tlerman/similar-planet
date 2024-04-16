@@ -43,11 +43,38 @@ function updateChart(data) {
             .attr("height", yScale.bandwidth())
             .attr("fill", color)
             .on("mouseover", function(event, d) {
-                d3.select(this).style("opacity", 0.5);
-                // Additional tooltip logic can be added here
+            const bar = d3.select(this);
+            bar.style("opacity", 0.7);
+            // const gender = bar.attr("class").includes("male") ? "male" : "female";
+            console.log("gender:", gender);
+            // Get the index of the hovered element
+            let i = d3.select(this.parentNode).selectAll('rect').nodes().indexOf(this);
+            const tooltipText = `Population: ${formatNumber(populationData[i])}`;
+            // Determine the x position for the tooltip based on the gender
+            let tooltipX;
+            if (gender === "male") {
+                tooltipX = width / 2 + xScale(d) / 2; // Tooltip for males on the right side
+            } else {
+                tooltipX = width / 2 - xScale(d) / 2; // Tooltip for females on the left side
+                i = i - data.age_groups.length;
+            }
+
+            console.log("Tooltip text:", tooltipText);
+            // Log the entire population data array to check its contents
+            console.log("Population data array:", populationData);
+            console.log("i:", i);
+
+                svg.append("text")
+                    .attr("class", "tooltip")
+                    .attr("x", tooltipX)
+                    .attr("y", yScale(data.age_groups[i]) + yScale.bandwidth()/ 1.1 )
+                    .attr("text-anchor", "middle")
+                    .text(`${formatNumber(populationData[i])}`);
             })
             .on("mouseout", function() {
-                d3.select(this).style("opacity", 1);
+                d3.select(this).style("opacity", 0.5);
+                // Display the population data
+
                 // Hide tooltip logic can be added here
             });
 
