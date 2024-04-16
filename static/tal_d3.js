@@ -87,6 +87,7 @@ function updateChart(data) {
         .attr("y", (d, i) => yScale(data.age_groups[i]) + yScale.bandwidth() / 2 + 5)
         .attr("text-anchor", d => gender === 'male' ? "start" : "end")
         .text(d => `${Math.round(d*100)}%`)
+        .style("font-weight", "bold")
         .attr("fill", "#333")
         .attr("font-size", "12px");
 
