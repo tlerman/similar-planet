@@ -91,7 +91,7 @@
 
     // Draw bars for male and female data
     drawBars('male', data.male_percent, data.male_population, 'blue');
-    drawBars('female', data.female_percent, data.female_population, 'pink');
+    drawBars('female', data.female_percent, data.female_population, 'orange');
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -118,7 +118,7 @@ document.addEventListener('DOMContentLoaded', function() {
         fetch(`/data?selected_country=${selectedCountry}`)
             .then(response => response.json())
             .then(data => {createChart1("#main-chart", 960, 500, data);
-                createChart1("#similar-chart1", 460, 250, data)}
+                           createChart1("#similar-chart1", 460, 250, data)}
             )
             .catch(error => console.error('Error fetching data:', error));
     });
