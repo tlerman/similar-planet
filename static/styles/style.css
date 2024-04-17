@@ -53,3 +53,33 @@ input:hover, button:hover {
     font-family: 'Arial', sans-serif; /* Ensure the font is consistent and readable */
     font-size: 0.75rem; /* Smaller font size for the values to fit well on bars */
 }
+
+.small-charts {
+    display: flex;
+    justify-content: space-around; /* This will space the chart containers evenly across the row */
+    align-items: flex-start; /* Aligns items at the start of the flex container */
+    width: 100%; /* Ensures the flex container takes full width */
+    gap: 20px; /* Optional: adds space between each chart container */
+}
+
+.chart-container {
+    display: flex;
+    flex-direction: column; /* Stacks the h2 and div vertically */
+    align-items: center; /* Centers the items horizontally */
+    width: 30%; /* Each chart container takes up 30% of the .small-charts container width */
+    min-height: 300px; /* Optional: Ensures each chart container has a minimum height */
+    border: 1px solid #ccc; /* Styles for the chart container */
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.chart-container h2 {
+    margin-bottom: 10px; /* Adds some space between the header and the chart */
+}
+
+#main-chart-container, .chart-container {
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 20px; /* Adds space between the main chart and small charts */
+}

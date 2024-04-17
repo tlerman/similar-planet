@@ -45,12 +45,13 @@ def serve_data():
     correlation_df = get_correlation_df(data)
     correlation_df[selected_country].sort_values()
     sorted_series = correlation_df[selected_country].sort_values()
+    chosen_country = sorted_series.index[-1]
     similar_country_1 = sorted_series.index[-2]
     similar_country_2 = sorted_series.index[-3]
     similar_country_3 = sorted_series.index[-4]
 
     res = []
-    for country in [similar_country_1, similar_country_2, similar_country_3]:
+    for country in [chosen_country, similar_country_1, similar_country_2, similar_country_3]:
         age_groups, male_population, female_population, male_percent, female_percent = get_demographic_data(data, country)
         data_to_send = {
             'age_groups': age_groups,
