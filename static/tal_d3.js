@@ -94,8 +94,26 @@
     drawBars('female', data.female_percent, data.female_population, 'orange');
 }
 
+
+function fetchAndUpdateCharts(selectedCountry) {
+    if (!selectedCountry) {
+        console.error('No country selected');
+        return;  // Stop the function if no country is provided
+    }
+    fetch(`/data?selected_country=${encodeURIComponent(selectedCountry)}`)
+        .then(response => response.json())
+        .then(data => {
+            // Update chart headers with the selected country name
+            document.getElementById('chart-header').textContent = `${selectedCountry}`;
+
+            // Update the charts with the fetched data
+            createChart1("#main-chart", 960, 500, data);
+            createChart1("#similar-chart1", 460, 250, data); // Assuming you want the same data in a smaller format
+        })
+        .catch(error => console.error('Error fetching data for:', selectedCountry, error));
+}
+
 document.addEventListener('DOMContentLoaded', function() {
-    // Fetch the list of countries from the Flask app
     d3.json('/api/countries').then(function(data) {
         const select = d3.select('#country-select');
 
@@ -104,22 +122,19 @@ document.addEventListener('DOMContentLoaded', function() {
             select.append('option').text(country).attr('value', country);
         });
 
-        // Fetch and display initial chart data for the default or first country
-        fetch(`/data?selected_country=${data.countries[0]}`)
-            .then(response => response.json())
-            .then(data => createChart1("#main-chart", 960, 500, data))
-            .catch(error => console.error('Error fetching data:', error));
+        // Automatically load data for the first country in the list, if available
+        if (data.countries.length > 0) {
+            const randomIndex = Math.floor(Math.random() * data.countries.length);  // Generate a random index
+            fetchAndUpdateCharts(data.countries[randomIndex]);
+        } else {
+            console.log('No countries found.');
+        }
+    }).catch(error => {
+        console.error('Error fetching country list:', error);
     });
 
-    // Event listener for when a new country is selected
+    // Setup event listener for country selection changes
     document.getElementById('country-select').addEventListener('change', function() {
-        var selectedCountry = this.value;
-        // Fetch and update the chart for the selected country
-        fetch(`/data?selected_country=${selectedCountry}`)
-            .then(response => response.json())
-            .then(data => {createChart1("#main-chart", 960, 500, data);
-                           createChart1("#similar-chart1", 460, 250, data)}
-            )
-            .catch(error => console.error('Error fetching data:', error));
+        fetchAndUpdateCharts(this.value);
     });
 });
