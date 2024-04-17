@@ -1,19 +1,17 @@
 // Function to update or initialize the demographic chart
-function updateChart(data) {
-    console.log(data); // Log the fetched data for verification
-
+ function createChart1(containerId, width, height, data) {
+// function updateChart(data) {
     // Clear any existing content in the chart element
-    d3.select("#chart").selectAll("*").remove();
-
-    const margin = {top: 20, right: 100, bottom: 30, left: 90},
-          width = 960 - margin.left - margin.right,
-          height = 500 - margin.top - margin.bottom;
+    d3.select(containerId).selectAll("*").remove();
+    const margin = {top: 20, right: 100, bottom: 30, left: 90};
+    //         width = 960 - margin.left - margin.right,
+    //         height = 500 - margin.top - margin.bottom;
 
     // Define number format with commas
     const formatNumber = d3.format(",");
 
     // Set up the SVG container
-    const svg = d3.select("#chart").append("svg")
+    const svg = d3.select(containerId).append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
@@ -73,9 +71,6 @@ function updateChart(data) {
             })
             .on("mouseout", function() {
                 d3.select(this).style("opacity", 0.5);
-                // Display the population data
-
-                // Hide tooltip logic can be added here
             });
 
         // Add text labels for percentages
@@ -101,7 +96,7 @@ function updateChart(data) {
 
 document.addEventListener('DOMContentLoaded', function() {
     // Fetch the list of countries from the Flask app
-    d3.json('/').then(function(data) {
+    d3.json('/api/data').then(function(data) {
         const select = d3.select('#country-select');
 
         // Populate the dropdown with countries
@@ -112,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Fetch and display initial chart data for the default or first country
         fetch(`/data?selected_country=${data.countries[0]}`)
             .then(response => response.json())
-            .then(data => updateChart(data))
+            .then(data => createChart1("#main-chart", 960, 500, data))
             .catch(error => console.error('Error fetching data:', error));
     });
 
@@ -122,7 +117,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Fetch and update the chart for the selected country
         fetch(`/data?selected_country=${selectedCountry}`)
             .then(response => response.json())
-            .then(data => updateChart(data))
+            .then(data => createChart1("#main-chart", 960, 500, data))
             .catch(error => console.error('Error fetching data:', error));
     });
 });

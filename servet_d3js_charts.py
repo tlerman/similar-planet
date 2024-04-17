@@ -29,6 +29,13 @@ def index():
     return render_template('index.html', countries=countries)
 
 
+@app.route('/api/data')
+def api_data():
+    data = fetch_and_preproccess_data()
+    countries = sorted(data['Country'].unique().tolist())
+    # You can include more data preprocessing here if needed
+    return jsonify({"countries": countries})
+
 @app.route('/data')
 def serve_data():
     data = fetch_and_preproccess_data()
