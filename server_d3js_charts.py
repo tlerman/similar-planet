@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 from flask import Flask, render_template, request, jsonify
 
-from utils import get_demographic_data
+from utils import get_demographic_data, get_correlation_df
 
 app = Flask(__name__)
 
@@ -36,21 +36,32 @@ def api_data():
     # You can include more data preprocessing here if needed
     return jsonify({"countries": countries})
 
+
 @app.route('/data')
 def serve_data():
     data = fetch_and_preproccess_data()
     selected_country = request.args.get('selected_country', 'Israel')
-    age_groups, male_population, female_population, male_percent, female_percent = get_demographic_data(data, selected_country)
-    data_to_send = {
-        'age_groups': age_groups,
-        'male_percent': male_percent,
-        'female_percent': female_percent,
-        'male_population': male_population,
-        'female_population': female_population
 
+    correlation_df = get_correlation_df(data)
+    correlation_df[selected_country].sort_values()
+    sorted_series = correlation_df[selected_country].sort_values()
+    similar_country_1 = sorted_series.index[-2]
+    similar_country_2 = sorted_series.index[-3]
+    similar_country_3 = sorted_series.index[-4]
 
-    }
-    return jsonify(data_to_send)
+    res = []
+    for country in [similar_country_1, similar_country_2, similar_country_3]:
+        age_groups, male_population, female_population, male_percent, female_percent = get_demographic_data(data, country)
+        data_to_send = {
+            'age_groups': age_groups,
+            'male_percent': male_percent,
+            'female_percent': female_percent,
+            'male_population': male_population,
+            'female_population': female_population
+        }
+        res.append({'data': data_to_send, 'country_name': country})
+
+    return jsonify(res)
 
 
 if __name__ == '__main__':

@@ -105,10 +105,11 @@ function fetchAndUpdateCharts(selectedCountry) {
         .then(data => {
             // Update chart headers with the selected country name
             document.getElementById('chart-header').textContent = `${selectedCountry}`;
-
+            // Update chart headers with the selected country name
+            document.getElementById('similar-chart-header').textContent = `${data[1]['country_name']}`;
             // Update the charts with the fetched data
-            createChart1("#main-chart", 960, 500, data);
-            createChart1("#similar-chart1", 460, 250, data); // Assuming you want the same data in a smaller format
+            createChart1("#main-chart", 960, 500, data[0]['data']);
+            createChart1("#similar-chart1", 460, 250, data[1]['data']); // Assuming you want the same data in a smaller format
         })
         .catch(error => console.error('Error fetching data for:', selectedCountry, error));
 }
