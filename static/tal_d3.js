@@ -4,8 +4,8 @@
     // Clear any existing content in the chart element
     d3.select(containerId).selectAll("*").remove();
     const margin = {top: 20, right: 100, bottom: 30, left: 90};
-    //         width = 960 - margin.left - margin.right,
-    //         height = 500 - margin.top - margin.bottom;
+            // width = 960 - margin.left - margin.right,
+            // height = 500 - margin.top - margin.bottom;
 
     // Define number format with commas
     const formatNumber = d3.format(",");
@@ -96,7 +96,7 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     // Fetch the list of countries from the Flask app
-    d3.json('/api/data').then(function(data) {
+    d3.json('/api/countries').then(function(data) {
         const select = d3.select('#country-select');
 
         // Populate the dropdown with countries
@@ -117,7 +117,9 @@ document.addEventListener('DOMContentLoaded', function() {
         // Fetch and update the chart for the selected country
         fetch(`/data?selected_country=${selectedCountry}`)
             .then(response => response.json())
-            .then(data => createChart1("#main-chart", 960, 500, data))
+            .then(data => {createChart1("#main-chart", 960, 500, data);
+                createChart1("#similar-chart1", 460, 250, data)}
+            )
             .catch(error => console.error('Error fetching data:', error));
     });
 });

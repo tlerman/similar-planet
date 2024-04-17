@@ -29,7 +29,7 @@ def index():
     return render_template('index.html', countries=countries)
 
 
-@app.route('/api/data')
+@app.route('/api/countries')
 def api_data():
     data = fetch_and_preproccess_data()
     countries = sorted(data['Country'].unique().tolist())
