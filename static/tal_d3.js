@@ -48,6 +48,7 @@
             // Get the index of the hovered element
             let i = d3.select(this.parentNode).selectAll('rect').nodes().indexOf(this);
             const tooltipText = `Population: ${formatNumber(populationData[i])}`;
+            const fontSize = width / 60;
             // Determine the x position for the tooltip based on the gender
             let tooltipX;
             if (gender === "male") {
@@ -57,16 +58,12 @@
                 i = i - data.age_groups.length;
             }
 
-            console.log("Tooltip text:", tooltipText);
-            // Log the entire population data array to check its contents
-            console.log("Population data array:", populationData);
-            console.log("i:", i);
-
                 svg.append("text")
                     .attr("class", "tooltip")
                     .attr("x", tooltipX)
                     .attr("y", yScale(data.age_groups[i]) + yScale.bandwidth()/ 1.1 )
                     .attr("text-anchor", "middle")
+                    .style("font-size",  `${fontSize}px`)
                     .text(`${formatNumber(populationData[i])}`);
             })
             .on("mouseout", function() {
@@ -108,11 +105,11 @@ function fetchAndUpdateCharts(selectedCountry) {
             // Update the charts with the fetched data
             createChart1("#main-chart", 960, 500, data[0]['data']);
             document.getElementById('small-chart-header-1').textContent = `${data[1]['country_name']}`;
-            createChart1("#small-chart-1", 460, 250, data[1]['data']); // Assuming you want the same data in a smaller format
+            createChart1("#small-chart-1", 360, 150, data[1]['data']); // Assuming you want the same data in a smaller format
             document.getElementById('small-chart-header-2').textContent = `${data[2]['country_name']}`;
-            createChart1("#small-chart-2", 460, 250, data[2]['data']); // Assuming you want the same data in a smaller format
+            createChart1("#small-chart-2", 360, 150, data[2]['data']); // Assuming you want the same data in a smaller format
             document.getElementById('small-chart-header-3').textContent = `${data[3]['country_name']}`;
-            createChart1("#small-chart-3", 460, 250, data[3]['data']); // Assuming you want the same data in a smaller format
+            createChart1("#small-chart-3", 360, 150, data[3]['data']); // Assuming you want the same data in a smaller format
         })
         .catch(error => console.error('Error fetching data for:', selectedCountry, error));
 }

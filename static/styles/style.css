@@ -4,27 +4,49 @@
     box-sizing: border-box;
 }
 
+select {
+    width: auto; /* Adjust width as needed */
+    padding: 8px 16px; /* Generous padding for a touch-friendly design */
+    border-radius: 8px; /* Rounded corners for a modern look */
+    border: none; /* No border */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+    background-color: white; /* Clean white background */
+    color: #555; /* Slightly lighter text for a gentle contrast */
+    font-size: 1.5rem; /* Matching the overall font size */
+    cursor: pointer; /* Pointer to indicate it's clickable */
+    outline: none; /* Remove focus outline for aesthetics; consider accessibility */
+}
+
 body {
     padding: 2rem;
-    background-color: white; /* Updated to a clean white background */
-    color: #333; /* Dark gray color for better readability on white */
+    background-color: #f4f4f9; /* A soft grayish background for a modern look */
+    color: #333; /* Dark gray color for better readability */
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 2rem;
-    font-size: 1rem; /* Adjusted for general readability */
+    font-family: 'Arial', sans-serif; /* Ensures consistent, modern typography */
+    font-size: 1rem; /* General readability */
 }
 
-input, button {
+input[type="button"], button {
     font-size: 1rem;
-    padding: 0.5rem 1rem; /* Slightly reduced padding for a neater appearance */
-    border-radius: 5px; /* Smoother border radius */
-    border: 1px solid #ccc; /* Light border for subtle definition */
-    background-color: #f9f9f9; /* Light background */
-    color: #333; /* Dark text for contrast */
-    cursor: pointer; /* Cursor changes to pointer to indicate clickable */
+    padding: 10px 20px;
+    border-radius: 8px;
+    background-color: #007bff; /* Vibrant blue for a fresh look */
+    color: white; /* White text for contrast */
+    border: none;
+    text-transform: uppercase; /* Stylish uppercase text */
+    letter-spacing: 1px; /* Spacing for a clean look */
+    transition: background-color 0.3s; /* Smooth transition for hover effects */
+    outline: none;
 }
+
+input[type="button"]:hover, button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
 
 input:hover, button:hover {
     background-color: #eaeaea; /* Slightly darker on hover for interactive feedback */
@@ -83,3 +105,5 @@ input:hover, button:hover {
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     margin-bottom: 20px; /* Adds space between the main chart and small charts */
 }
+
+
