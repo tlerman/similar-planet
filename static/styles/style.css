@@ -26,7 +26,7 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 2rem;
-    font-family: 'Arial', sans-serif; /* Ensures consistent, modern typography */
+    font-family: 'Times New Roman',  Times, serif; /* Ensures consistent, modern typography */
     font-size: 1rem; /* General readability */
 }
 

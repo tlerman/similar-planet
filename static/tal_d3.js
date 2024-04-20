@@ -48,7 +48,7 @@
             // Get the index of the hovered element
             let i = d3.select(this.parentNode).selectAll('rect').nodes().indexOf(this);
             const tooltipText = `Population: ${formatNumber(populationData[i])}`;
-            const fontSize = width / 60;
+            const fontSize = width / 40;
             // Determine the x position for the tooltip based on the gender
             let tooltipX;
             if (gender === "male") {
@@ -136,7 +136,6 @@ window.onpopstate = function(event) {
         }
     }
 };
-
 document.addEventListener('DOMContentLoaded', function() {
     d3.json('/api/countries').then(function(data) {
         const select = d3.select('#country-select');
