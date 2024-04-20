@@ -21,7 +21,7 @@
 </head>
 <body>
     <h1>Demographic Pyramids of the World</h1>
-<select id="country-select" name="country-select">
+<select id="country-select" onchange="updateURLAndFetchData(this.value)">
     <option value="">Select a country</option>
     {% for country in countries %}
     <option value="{{ country }}">{{ country }}</option>

@@ -35,12 +35,17 @@ def api_data():
     return jsonify({"countries": countries})
 
 
-@app.route('/data')
-def serve_data():
+@app.route('/data/<selected_country>')
+def serve_data(selected_country):
     data = fetch_and_preproccess_data()
-    selected_country = request.args.get('selected_country', 'Israel')
+    try:
+        correlation_df = get_correlation_df(data)
+    except KeyError:
+        return jsonify({'error': 'Country not found'}), 404
 
-    correlation_df = get_correlation_df(data)
+    # selected_country = request.args.get('selected_country', 'Israel')
+
+
     correlation_df[selected_country].sort_values()
     sorted_series = correlation_df[selected_country].sort_values()
     chosen_country = sorted_series.index[-1]

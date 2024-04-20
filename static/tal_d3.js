@@ -91,13 +91,26 @@
     drawBars('female', data.female_percent, data.female_population, 'orange');
 }
 
+function updateURLAndFetchData(selectedCountry) {
+    if (!selectedCountry) {
+        console.error('No country selected');
+        return;  // Do nothing if the selection is cleared or invalid
+    }
+
+    // Update the URL with the selected country
+    const newUrl = `${window.location.protocol}//${window.location.host}${window.location.pathname}?country=${encodeURIComponent(selectedCountry)}`;
+    window.history.pushState({ path: newUrl }, '', newUrl);
+
+    // Call the function to update the charts or fetch data as required
+    fetchAndUpdateCharts(selectedCountry);
+}
 
 function fetchAndUpdateCharts(selectedCountry) {
     if (!selectedCountry) {
         console.error('No country selected');
         return;  // Stop the function if no country is provided
     }
-    fetch(`/data?selected_country=${encodeURIComponent(selectedCountry)}`)
+    fetch(`/data/${encodeURIComponent(selectedCountry)}`)
         .then(response => response.json())
         .then(data => {
             // Update chart headers with the selected country name
@@ -113,6 +126,16 @@ function fetchAndUpdateCharts(selectedCountry) {
         })
         .catch(error => console.error('Error fetching data for:', selectedCountry, error));
 }
+
+window.onpopstate = function(event) {
+    if (event.state) {
+        const country = new URL(window.location.href).searchParams.get("country");
+        if (country) {
+            document.getElementById('country-select').value = country;
+            fetchAndUpdateCharts(country);
+        }
+    }
+};
 
 document.addEventListener('DOMContentLoaded', function() {
     d3.json('/api/countries').then(function(data) {
