@@ -63,7 +63,7 @@ def serve_data(selected_country):
             'male_population': male_population,
             'female_population': female_population
         }
-        res.append({'data': data_to_send, 'country_name': country})
+        res.append({'data': data_to_send, 'country_name': country, 'total_population': sum(male_population)+ sum(female_population)})
 
     return jsonify(res)
 
