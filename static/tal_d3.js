@@ -1,11 +1,9 @@
 // Function to update or initialize the demographic chart
- function createChart1(containerId, width, height, data) {
+ function createChart0(containerId, width, height, data) {
 // function updateChart(data) {
     // Clear any existing content in the chart element
     d3.select(containerId).selectAll("*").remove();
     const margin = {top: 20, right: 100, bottom: 30, left: 90};
-            // width = 960 - margin.left - margin.right,
-            // height = 500 - margin.top - margin.bottom;
 
     // Define number format with commas
     const formatNumber = d3.format(",");
@@ -89,6 +87,74 @@
     // Draw bars for male and female data
     drawBars('male', data.male_percent, data.male_population, 'blue');
     drawBars('female', data.female_percent, data.female_population, 'orange');
+}
+
+
+function createChart1(containerId, width, height, data) {
+    // Initial setup: only done once per page load
+    const margin = { top: 20, right: 100, bottom: 30, left: 90 },
+          fullwidth = width + margin.left + margin.right,
+          fullheight = height + margin.top + margin.bottom;
+
+    let svg = d3.select(containerId).select("svg");
+
+    if (svg.empty()) {
+        svg = d3.select(containerId).append("svg")
+            .attr("width", fullwidth)
+            .attr("height", fullheight)
+            .append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
+
+        svg.append("g")
+           .attr("class", "x-axis")
+           .attr("transform", `translate(-30,${height})`);
+
+        svg.append("g")
+           .attr("class", "y-axis");
+    }
+
+    const xScale = d3.scaleLinear().range([0, width / 2]);
+    const yScale = d3.scaleBand().range([height, 0]).padding(0.1);
+
+    // Update scales
+    xScale.domain([0, d3.max([...data.male_percent, ...data.female_percent])]);
+    yScale.domain(data.age_groups);
+
+    // Update the axes
+    svg.select(".y-axis")
+       .transition()
+       .duration(750)
+       .call(d3.axisLeft(yScale));
+
+    // Function to update bars
+    function updateBars(gender, percentData, populationData, color) {
+        const bars = svg.selectAll(`.bar.${gender}`)
+                        .data(percentData, (d, i) => `${gender}-${i}`);
+
+        // Exit
+        bars.exit()
+            .transition()
+            .duration(750)
+            .attr("width", 0)
+            .remove();
+
+        // Enter + update
+        bars.enter().append("rect")
+            .attr("class", `bar ${gender}`)
+            .attr("fill", color)
+            .merge(bars)
+            .transition()
+            .duration(750)
+            .attr("x", d => gender === 'male' ? width / 2 : width / 2 - xScale(d))
+            .attr("y", (d, i) => yScale(data.age_groups[i]))
+            .attr("width", d => xScale(d))
+            .attr("height", yScale.bandwidth());
+
+    }
+
+    // Update bars for male and female
+    updateBars('male', data.male_percent, data.male_population, 'blue');
+    updateBars('female', data.female_percent, data.female_population, 'orange');
 }
 
 function updateURLAndFetchData(selectedCountry) {

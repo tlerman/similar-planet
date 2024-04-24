@@ -4,6 +4,19 @@
     box-sizing: border-box;
 }
 
+/* Styles for devices with less than 600px width */
+@media (max-width: 600px) {
+    .chart-container {
+        width: 100%;
+        padding: 10px;
+    }
+
+    /* Reduce font-size for smaller devices */
+    .small-text {
+        font-size: 0.7em;
+    }
+}
+
 select {
     width: auto; /* Adjust width as needed */
     padding: 8px 16px; /* Generous padding for a touch-friendly design */
