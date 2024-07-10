@@ -116,13 +116,13 @@ function fetchAndUpdateCharts(selectedCountry) {
             // Update chart headers with the selected country name
             document.getElementById('chart-header').textContent = `Population: ${data[0]['total_population'].toLocaleString()}`;
             // Update the charts with the fetched data
-            createChart1("#main-chart", 460, 350, data[0]['data']);
+            createChart1("#main-chart", 560, 450, data[0]['data']);
             document.getElementById('small-chart-header-1').innerHTML = `${data[1]['country_name']}<span style="font-size: smaller;"> - Population: ${data[1]['total_population'].toLocaleString()}</span>`;
-            createChart1("#small-chart-1", 360, 250, data[1]['data']); // Assuming you want the same data in a smaller format
+            createChart1("#small-chart-1", 330, 230, data[1]['data']); // Assuming you want the same data in a smaller format
             document.getElementById('small-chart-header-2').innerHTML = `${data[2]['country_name']}<span style="font-size: smaller;"> - Population: ${data[2]['total_population'].toLocaleString()}</span>`;
-            createChart1("#small-chart-2", 360, 250, data[2]['data']); // Assuming you want the same data in a smaller format
+            createChart1("#small-chart-2", 330, 230, data[2]['data']); // Assuming you want the same data in a smaller format
             document.getElementById('small-chart-header-3').innerHTML = `${data[3]['country_name']}<span style="font-size: smaller;"> - Population: ${data[3]['total_population'].toLocaleString()}</span>`;
-            createChart1("#small-chart-3", 360, 250, data[3]['data']); // Assuming you want the same data in a smaller format
+            createChart1("#small-chart-3", 330, 230, data[3]['data']); // Assuming you want the same data in a smaller format
         })
         .catch(error => console.error('Error fetching data for:', selectedCountry, error));
 }
