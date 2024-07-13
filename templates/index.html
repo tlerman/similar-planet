@@ -8,43 +8,45 @@
     <meta name="description" content="Demographic population pyramids from various countries around the world visualizations. Age and gender distribution data.">
     <script src="https://d3js.org/d3.v6.min.js"></script>
     <link rel="stylesheet" href="/static/styles/style.css">
-    <div id="tooltip" style="position: absolute; opacity: 0; background-color: #fff; border: 1px solid #ddd; padding: 5px; border-radius: 3px; pointer-events: none;"></div>
-    <style>
-        .bar:hover {
-            fill: darkorange;
-        }
-        .chart {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-    </style>
-
 </head>
 <body>
     <h1>Demographic Pyramids of the World</h1>
-<select id="country-select" onchange="updateURLAndFetchData(this.value)">
-    <option value="">Select a country</option>
-    {% for country in countries %}
-    <option value="{{ country }}">{{ country }}</option>
-    {% endfor %}
-</select>
-    <h2 id="chart-header"></h2>
-    <div id="main-chart" class="chart"></div>
+    <select id="country-select" onchange="updateCountryInfo(this.value)">
+        <option value="">Select a country</option>
+        {% for country in countries %}
+        <option value="{{ country }}">{{ country }}</option>
+        {% endfor %}
+    </select>
+
+    <div class="chart-info-container">
+        <div class="chart-section">
+            <h2 id="chart-header">Population</h2>
+            <div id="main-chart" class="chart"></div>
+        </div>
+        <div class="info-section">
+            <h2>Country Information</h2>
+            <div id="country-info"></div>
+        </div>
+    </div>
+
     <h2>Most Similar Countries</h2>
     <div class="small-charts">
-    <h3 id="small-chart-header-1">Small Chart 1</h3>
-    <div id="small-chart-1"></div>
-
-    <h3 id="small-chart-header-2">Small Chart 2</h3>
-    <div id="small-chart-2"></div>
-
-    <h3 id="small-chart-header-3">Small Chart 3</h3>
-    <div id="small-chart-3"></div>
+        <div class="chart-container">
+            <h3 id="small-chart-header-1">Small Chart 1</h3>
+            <div id="small-chart-1"></div>
+        </div>
+        <div class="chart-container">
+            <h3 id="small-chart-header-2">Small Chart 2</h3>
+            <div id="small-chart-2"></div>
+        </div>
+        <div class="chart-container">
+            <h3 id="small-chart-header-3">Small Chart 3</h3>
+            <div id="small-chart-3"></div>
+        </div>
     </div>
+
+    <div id="tooltip" style="position: absolute; opacity: 0; background-color: #fff; border: 1px solid #ddd; padding: 5px; border-radius: 3px; pointer-events: none;"></div>
 
     <script src="static/tal_d3.js"></script>
 </body>
 </html>
-
-

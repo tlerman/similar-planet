@@ -39,7 +39,7 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 2rem;
-    font-family: 'Times New Roman',  Times, serif; /* Ensures consistent, modern typography */
+    font-family: 'Times New Roman', Times, serif; /* Ensures consistent, modern typography */
     font-size: 1rem; /* General readability */
 }
 
@@ -59,7 +59,6 @@ input[type="button"], button {
 input[type="button"]:hover, button:hover {
     background-color: #0056b3; /* Darker blue on hover */
 }
-
 
 input:hover, button:hover {
     background-color: #eaeaea; /* Slightly darker on hover for interactive feedback */
@@ -119,4 +118,19 @@ input:hover, button:hover {
     margin-bottom: 20px; /* Adds space between the main chart and small charts */
 }
 
+.chart-info-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    gap: 10px;
+}
 
+.chart-section, .info-section {
+    flex: 1;
+}
+
+.info-section {
+    margin-left: 200px;
+    max-width: 300px;
+}

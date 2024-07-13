@@ -91,6 +91,22 @@
     drawBars('female', data.female_percent, data.female_population, 'orange');
 }
 
+// Fetch and display country information based on selection
+function updateCountryInfo(country) {
+    if (!country) {
+        document.getElementById("country-info").innerText = "";
+        return;
+    }
+
+    fetch('static/countries_text.json')
+        .then(response => response.json())
+        .then(data => {
+            const countryInfo = data[country] || "Information not available for this country.";
+            document.getElementById("country-info").innerText = countryInfo;
+        })
+        .catch(error => console.error('Error fetching country information:', error));
+}
+
 function updateURLAndFetchData(selectedCountry) {
     if (!selectedCountry) {
         console.error('No country selected');
@@ -103,6 +119,7 @@ function updateURLAndFetchData(selectedCountry) {
 
     // Call the function to update the charts or fetch data as required
     fetchAndUpdateCharts(selectedCountry);
+    updateCountryInfo(selectedCountry);
 }
 
 function fetchAndUpdateCharts(selectedCountry) {
@@ -116,7 +133,7 @@ function fetchAndUpdateCharts(selectedCountry) {
             // Update chart headers with the selected country name
             document.getElementById('chart-header').textContent = `Population: ${data[0]['total_population'].toLocaleString()}`;
             // Update the charts with the fetched data
-            createChart1("#main-chart", 560, 450, data[0]['data']);
+            createChart1("#main-chart", 520, 400, data[0]['data']);
             document.getElementById('small-chart-header-1').innerHTML = `${data[1]['country_name']}<span style="font-size: smaller;"> - Population: ${data[1]['total_population'].toLocaleString()}</span>`;
             createChart1("#small-chart-1", 330, 230, data[1]['data']); // Assuming you want the same data in a smaller format
             document.getElementById('small-chart-header-2').innerHTML = `${data[2]['country_name']}<span style="font-size: smaller;"> - Population: ${data[2]['total_population'].toLocaleString()}</span>`;
